@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { canPublish, canPropose } from '../access/roles'
+import { canPropose } from '../access/roles'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -16,7 +16,6 @@ export const Pages: CollectionConfig = {
     update: canPropose,
     delete: ({ req: { user } }) => user?.role === 'dev' || user?.role === 'admin',
     readVersions: ({ req: { user } }) => !!user,
-    publish: canPublish,
   },
   fields: [
     {

@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { canPublish, canPropose } from '../access/roles'
+import { canPropose } from '../access/roles'
 
 // NOTE: Fields marked TBD will be updated once Matt provides the CSV files.
 // See skill.md open questions: "Events CSV files — request from Matt before building Events collection"
@@ -20,7 +20,6 @@ export const Events: CollectionConfig = {
     update: canPropose,
     delete: ({ req: { user } }) => user?.role === 'dev' || user?.role === 'admin',
     readVersions: ({ req: { user } }) => !!user,
-    publish: canPublish,
   },
   fields: [
     {
