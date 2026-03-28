@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom font faces will be added here once Matt provides the font files */
+/* Example:
+@font-face {
+  font-family: 'GertieDisplay';
+  src: url('/fonts/GertieDisplay-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+*/
