@@ -2,7 +2,6 @@ import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { resendAdapter } from '@payloadcms/email-resend'
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import path from 'path'
 import { fileURLToPath } from 'url'
 

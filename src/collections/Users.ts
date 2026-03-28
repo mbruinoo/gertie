@@ -24,9 +24,6 @@ export const Users: CollectionConfig = {
         { label: 'Manager', value: 'manager' },
         { label: 'Editor', value: 'editor' },
       ],
-      admin: {
-        description: 'Dev: full system access. Admin: full CMS access, can publish. Manager: can propose and approve. Editor: propose only (drafts).',
-      },
     },
   ],
 }
