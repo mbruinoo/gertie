@@ -28,7 +28,7 @@ export default async function HomePage() {
   const mastheadPhotos = ((homepage as any)?.mastheadPhotos ?? []).map((p: any) => ({
     url: p.image?.url ?? '',
     alt: p.image?.alt ?? '',
-    caption: p.caption ?? '',
+    caption: p.caption ?? null,
   }))
 
   const tickerItems = upcomingEvents.docs.map((event: any) => {

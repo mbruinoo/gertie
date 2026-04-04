@@ -1,11 +1,10 @@
-'use client'
-
-import { useEffect, useRef } from 'react'
+import { RichText } from '@payloadcms/richtext-lexical/react'
+import MastheadScroll from './MastheadScroll'
 
 type MastheadPhoto = {
   url: string
   alt: string
-  caption?: string
+  caption?: object | null
 }
 
 type MastheadProps = {
@@ -14,61 +13,13 @@ type MastheadProps = {
 }
 
 const photoConfigs = [
-  {
-    className: 'floating-photo-a',
-    style: { top: '10svw', left: '5svw', zIndex: 1 },
-    rate: 0.4,
-    scale: 1,
-    showCaption: true,
-  },
-  {
-    className: 'floating-photo-b',
-    style: { top: '8svw', right: '10svw', transform: 'scale(0.85)' },
-    rate: 0.7,
-    scale: 0.85,
-    showCaption: true,
-  },
-  {
-    className: 'floating-photo-c',
-    style: { bottom: '10svh', right: '15svw', transform: 'scale(0.7)' },
-    rate: 0.05,
-    scale: 0.7,
-    showCaption: false,
-  },
+  { className: 'floating-photo-a', showCaption: true  },
+  { className: 'floating-photo-b', showCaption: true  },
+  { className: 'floating-photo-c', showCaption: false },
 ]
 
 export default function Masthead({ tagline, photos }: MastheadProps) {
-  const photoRefs = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    const configs = photoRefs.current.map((el, i) => ({
-      el,
-      rate: photoConfigs[i]?.rate ?? 0,
-      scale: photoConfigs[i]?.scale ?? 1,
-    }))
-
-    let ticking = false
-    const onScroll = () => {
-      const scrollY = window.scrollY
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          configs.forEach(({ el, rate, scale }) => {
-            if (!el) return
-            el.style.transform = `translateY(${scrollY * rate}px) scale(${scale})`
-          })
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   return (
-    // Single relative container — both the background and wordmark overlay
-    // are scoped to this so absolute positioning works correctly
     <div
       style={{
         position: 'relative',
@@ -78,30 +29,17 @@ export default function Masthead({ tagline, photos }: MastheadProps) {
         overflow: 'hidden',
       }}
     >
-      {/* Floating photos — behind wordmark */}
+      {/* Floating photos — positioned via CSS classes, parallax via MastheadScroll */}
       {photos.slice(0, 3).map((photo, i) => {
         const config = photoConfigs[i]
         if (!config) return null
         return (
           <div
             key={i}
-            ref={(el) => { photoRefs.current[i] = el }}
-            style={{
-              position: 'absolute',
-              willChange: 'transform',
-              ...config.style,
-            }}
+            className={config.className}
+            style={{ position: 'absolute', willChange: 'transform' }}
           >
-            <div
-              style={{
-                overflow: 'clip',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: '220px',
-                height: '280px',
-              }}
-            >
+            <div className="masthead-floating-photo-crop">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={photo.url}
@@ -111,28 +49,24 @@ export default function Masthead({ tagline, photos }: MastheadProps) {
               />
             </div>
             {config.showCaption && photo.caption && (
-              <p
-                style={{
-                  fontSize: '14px',
-                  lineHeight: '18px',
-                  marginTop: '6px',
-                  color: '#1b1b1b',
-                }}
-              >
-                {photo.caption}
-              </p>
+              <div className="masthead-caption">
+                <RichText data={photo.caption} />
+              </div>
             )}
           </div>
         )
       })}
 
-      {/* Wordmark overlay — responsive via CSS classes */}
+      {/* Wordmark overlay */}
       <div className="masthead-overlay">
         <div className="masthead-inner">
           <h1 className="masthead-heading">Gertie</h1>
           <h2 className="masthead-tagline">{tagline}</h2>
         </div>
       </div>
+
+      {/* Scroll behavior — client only, queries DOM by class name */}
+      <MastheadScroll />
     </div>
   )
 }

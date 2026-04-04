@@ -141,6 +141,63 @@ h5 {
   text-decoration: underline;
 }
 
+/* ── Masthead floating photos ── */
+.floating-photo-a {
+  top: 10svw;
+  left: 5svw;
+  z-index: 1;
+}
+
+.floating-photo-b {
+  top: 8svw;
+  right: 10svw;
+  transform: scale(0.85);
+}
+
+.floating-photo-c {
+  bottom: 10svh;
+  right: 15svw;
+  transform: scale(0.7);
+}
+
+@media screen and (max-width: 767px) {
+  .floating-photo-b {
+    top: 28svw;
+  }
+}
+
+.masthead-floating-photo-crop {
+  overflow: clip;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30svw;
+  max-width: 320px;
+  height: 20svw;
+  max-height: 240px;
+}
+
+.masthead-caption {
+  font-size: 14px;
+  line-height: 18px;
+  margin-top: 6px;
+  color: #1b1b1b;
+}
+
+.masthead-caption p {
+  margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .masthead-floating-photo-crop {
+    width: 40svw;
+    height: 28svw;
+  }
+  .masthead-caption {
+    display: none;
+  }
+}
+
 /* ── Masthead ── */
 .masthead-overlay {
   position: absolute;
@@ -163,7 +220,7 @@ h5 {
 
 .masthead-heading {
   color: #1b1b1b;
-  font-size: 300px;
+  font-size: clamp(120px, 21vw, 300px);
   font-weight: 700;
   line-height: 100px;
   margin: 0;
