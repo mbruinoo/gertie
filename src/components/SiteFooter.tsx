@@ -10,26 +10,14 @@ export default function SiteFooter({
   copyrightText = `Gertie is a cultural agency in Chicago. Copyright © ${new Date().getFullYear()} Mama Gertie, LLC. All rights reserved.`,
 }: FooterProps) {
   return (
-    <footer
-      style={{
-        zIndex: 1,
-        paddingTop: 'var(--padding)',
-        paddingRight: 'var(--padding)',
-        paddingLeft: 'var(--padding)',
-        paddingBottom: 'calc(var(--padding) * 3)',
-        columnGap: 'var(--padding)',
-        rowGap: 'var(--padding)',
-        display: 'grid',
-        gridTemplate: '"Area Area-3 Area-3 Area-3" "Area-2 Area-3 Area-3 Area-3" / 1fr 1fr 1fr 1fr',
-      }}
-    >
+    <footer className="site-footer">
       {/* Copyright */}
-      <div style={{ gridArea: 'Area', fontSize: '14px', lineHeight: '18px', maxWidth: '220px' }}>
-        <p style={{ margin: 0 }}>{copyrightText}</p>
+      <div style={{ gridArea: 'Area' }} className="site-footer-copyright">
+        <p style={{ margin: 0, fontSize: '14px', lineHeight: '18px' }}>{copyrightText}</p>
       </div>
 
       {/* Links */}
-      <div style={{ gridArea: 'Area-2' }}>
+      <div style={{ gridArea: 'Area-2' }} className="site-footer-links">
         {[
           { label: 'Instagram', href: instagramUrl },
           { label: 'Terms of Use', href: '#' },
@@ -37,11 +25,9 @@ export default function SiteFooter({
           { label: 'Contact Us', href: '#' },
           { label: 'Press Inquiries', href: '#' },
         ].map((link) => (
-          <h6 key={link.label} style={{ margin: '0 0 4px', fontWeight: 700 }}>
-            <a href={link.href} style={{ color: 'inherit', textDecoration: 'none' }}>
-              {link.label}
-            </a>
-          </h6>
+          <a key={link.label} href={link.href} className="footer-link">
+            {link.label}
+          </a>
         ))}
       </div>
 

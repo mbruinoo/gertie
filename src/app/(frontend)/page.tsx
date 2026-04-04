@@ -56,22 +56,9 @@ export default async function HomePage() {
         <Ticker items={tickerItems.length ? tickerItems : fallbackTicker} />
 
         {/* About section */}
-        <section
-          style={{
-            zIndex: 1,
-            paddingTop: 'calc(var(--padding) * 2)',
-            paddingBottom: 'calc(var(--padding) * 2)',
-            paddingRight: 'var(--padding)',
-            paddingLeft: 'var(--padding)',
-            display: 'grid',
-            gridTemplate: '"Area Area-2 Area-2 Area-2" / 1fr 1fr 1fr 1fr',
-            columnGap: '16px',
-          }}
-        >
-          <div style={{ gridArea: 'Area' }}>
-            <h5 style={{ margin: 0, fontWeight: 700, fontSize: '14px' }}>
-              <strong>About Gertie</strong>
-            </h5>
+        <section className="about-section">
+          <div style={{ gridArea: 'Area' }} className="about-section-label">
+            <h5>About Gertie</h5>
           </div>
           <div style={{ gridArea: 'Area-2', maxWidth: '720px' }}>
             <h3 style={{ fontWeight: 400, margin: '0 0 1.5em' }}>
@@ -83,24 +70,11 @@ export default async function HomePage() {
               move through it with confidence. We partner with artists, curators, galleries, and
               institutions to connect Chicago to the world and the world to Chicago.
             </h3>
-            <h5 style={{ margin: 0, fontSize: '14px' }}>
-              <Link
-                href="/about"
-                style={{
-                  color: 'inherit',
-                  textDecoration: 'none',
-                }}
-              >
-                Learn more about Gertie{' '}
-                <span
-                  style={{
-                    display: 'inline-block',
-                    transition: 'transform 0.45s cubic-bezier(0.64, 0.57, 0.37, 1.53)',
-                  }}
-                  className="animrightarrow"
-                >
-                  →
-                </span>
+            <h5>
+              <Link href="/about" className="arrow-link" style={{ color: 'inherit', textDecoration: 'none' }}>
+                <span className="arrow-text">Learn more about Gertie</span>
+                {' '}
+                <span className="animrightarrow">→</span>
               </Link>
             </h5>
           </div>

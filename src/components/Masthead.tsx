@@ -67,109 +67,72 @@ export default function Masthead({ tagline, photos }: MastheadProps) {
   }, [])
 
   return (
-    <>
-      {/* Wordmark overlay — sits above masthead, centered */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100svw',
-          height: '94svh',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          zIndex: 2,
-          pointerEvents: 'none',
-        }}
-      >
-        <div style={{ textAlign: 'center', width: '80%', maxWidth: '1280px' }}>
-          <h1
+    // Single relative container — both the background and wordmark overlay
+    // are scoped to this so absolute positioning works correctly
+    <div
+      style={{
+        position: 'relative',
+        width: '100svw',
+        height: '94svh',
+        backgroundColor: '#c6c5be',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Floating photos — behind wordmark */}
+      {photos.slice(0, 3).map((photo, i) => {
+        const config = photoConfigs[i]
+        if (!config) return null
+        return (
+          <div
+            key={i}
+            ref={(el) => { photoRefs.current[i] = el }}
             style={{
-              color: '#1b1b1b',
-              fontSize: '300px',
-              fontWeight: 700,
-              lineHeight: '100px',
-              margin: 0,
-              fontFamily: 'Abcrom, Arial, sans-serif',
+              position: 'absolute',
+              willChange: 'transform',
+              ...config.style,
             }}
           >
-            Gertie
-          </h1>
-          <h2
-            style={{
-              color: '#fff',
-              fontSize: '32px',
-              fontWeight: 500,
-              lineHeight: '38px',
-              margin: '32px auto 0',
-              fontFamily: 'Abcrom, Arial, sans-serif',
-            }}
-          >
-            {tagline}
-          </h2>
-        </div>
-      </div>
-
-      {/* Masthead background + floating photos */}
-      <div
-        style={{
-          backgroundColor: '#c6c5be',
-          width: '100svw',
-          height: '94svh',
-          position: 'relative',
-          display: 'flex',
-          justifyContent: 'center',
-          overflow: 'hidden',
-        }}
-      >
-        {photos.slice(0, 3).map((photo, i) => {
-          const config = photoConfigs[i]
-          if (!config) return null
-          return (
             <div
-              key={i}
-              ref={(el) => { photoRefs.current[i] = el }}
               style={{
-                position: 'absolute',
-                willChange: 'transform',
-                ...config.style,
+                overflow: 'clip',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '220px',
+                height: '280px',
               }}
             >
-              <div
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photo.url}
+                alt={photo.alt}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                loading="lazy"
+              />
+            </div>
+            {config.showCaption && photo.caption && (
+              <p
                 style={{
-                  overflow: 'clip',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: '220px',
-                  height: '280px',
+                  fontSize: '14px',
+                  lineHeight: '18px',
+                  marginTop: '6px',
+                  color: '#1b1b1b',
                 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={photo.url}
-                  alt={photo.alt}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  loading="lazy"
-                />
-              </div>
-              {config.showCaption && photo.caption && (
-                <p
-                  style={{
-                    fontSize: '14px',
-                    lineHeight: '18px',
-                    marginTop: '6px',
-                    color: '#1b1b1b',
-                  }}
-                >
-                  {photo.caption}
-                </p>
-              )}
-            </div>
-          )
-        })}
+                {photo.caption}
+              </p>
+            )}
+          </div>
+        )
+      })}
+
+      {/* Wordmark overlay — responsive via CSS classes */}
+      <div className="masthead-overlay">
+        <div className="masthead-inner">
+          <h1 className="masthead-heading">Gertie</h1>
+          <h2 className="masthead-tagline">{tagline}</h2>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
