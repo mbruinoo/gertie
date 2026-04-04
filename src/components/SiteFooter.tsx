@@ -32,7 +32,7 @@ export default function SiteFooter({
       </div>
 
       {/* Klaviyo embed */}
-      <div style={{ gridArea: 'Area-3' }}>
+      <div className="site-footer-klaviyo" style={{ gridArea: 'Area-3' }}>
         {klaviyoEmbedCode ? (
           <div
             style={{ marginLeft: '-10px' }}

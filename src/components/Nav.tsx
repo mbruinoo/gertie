@@ -2,8 +2,11 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 
-const navLinks = [
+type NavLink = { label: string; href: string; accent?: boolean }
+
+const defaultNavLinks: NavLink[] = [
   { label: 'About', href: '/about' },
   { label: 'Exhibitions', href: '/exhibitions' },
   { label: 'Membership', href: '/membership' },
@@ -11,7 +14,7 @@ const navLinks = [
   { label: 'CXW 2026', href: '/cxw-2026', accent: true },
 ]
 
-const ctaLinks = [
+const defaultCtaLinks: NavLink[] = [
   { label: 'Become a member', href: '/membership' },
   { label: 'Sign in', href: '/login' },
 ]
@@ -40,8 +43,18 @@ const linkStyle: React.CSSProperties = {
   transition: 'background-color .2s cubic-bezier(.645,.045,.355,1), color .2s cubic-bezier(.645,.045,.355,1)',
 }
 
-export default function Nav({ transparent = false }: { transparent?: boolean }) {
+export default function Nav({
+  transparent = false,
+  navLinks = defaultNavLinks,
+  ctaLinks = defaultCtaLinks,
+}: {
+  transparent?: boolean
+  navLinks?: NavLink[]
+  ctaLinks?: NavLink[]
+}) {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const pathname = usePathname()
+  const isHome = pathname === '/'
 
   return (
     <>
@@ -63,7 +76,7 @@ export default function Nav({ transparent = false }: { transparent?: boolean }) 
         {/* Left: wordmark (non-homepage) + nav links pill */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {!transparent && (
-            <Link href="/" style={{ ...linkStyle, fontWeight: 700, fontSize: '16px' }}>
+            <Link href="/" style={{ ...linkStyle, fontWeight: 500, fontSize: '22px' }}>
               Gertie
             </Link>
           )}
@@ -163,23 +176,48 @@ export default function Nav({ transparent = false }: { transparent?: boolean }) 
       </nav>
 
       {/* ── Mobile menu overlay ── */}
-      {mobileOpen && (
-        <div
-          className="flex md:hidden"
-          style={{
-            position: 'fixed',
-            top: '56px',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'white',
-            zIndex: 99,
-            flexDirection: 'column',
-            padding: 'var(--padding)',
-            gap: '4px',
-          }}
-        >
-          {navLinks.map((link) => (
+      <div
+        className={`mobile-nav-overlay${mobileOpen ? ' mobile-nav-overlay--open' : ''}`}
+        aria-hidden={!mobileOpen}
+      >
+        {!isHome && (
+          <Link
+            href="/"
+            onClick={() => setMobileOpen(false)}
+            style={{
+              fontFamily: 'Abcrom, Arial, sans-serif',
+              fontSize: '32px',
+              fontWeight: 500,
+              lineHeight: '1.2',
+              color: '#1b1b1b',
+              textDecoration: 'none',
+              padding: '8px 0',
+            }}
+          >
+            Gertie
+          </Link>
+        )}
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            onClick={() => setMobileOpen(false)}
+            style={{
+              fontFamily: 'Abcrom, Arial, sans-serif',
+              fontSize: '32px',
+              fontWeight: link.accent ? 500 : 300,
+              lineHeight: '1.2',
+              color: '#1b1b1b',
+              textDecoration: 'none',
+              padding: '8px 0',
+            }}
+          >
+            {link.label}
+          </Link>
+        ))}
+
+        <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          {ctaLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -187,7 +225,7 @@ export default function Nav({ transparent = false }: { transparent?: boolean }) 
               style={{
                 fontFamily: 'Abcrom, Arial, sans-serif',
                 fontSize: '32px',
-                fontWeight: link.accent ? 500 : 300,
+                fontWeight: 300,
                 lineHeight: '1.2',
                 color: '#1b1b1b',
                 textDecoration: 'none',
@@ -197,28 +235,8 @@ export default function Nav({ transparent = false }: { transparent?: boolean }) 
               {link.label}
             </Link>
           ))}
-
-          <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            {ctaLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  fontFamily: 'Abcrom, Arial, sans-serif',
-                  fontSize: '16px',
-                  fontWeight: 500,
-                  color: '#1b1b1b',
-                  textDecoration: 'none',
-                  padding: '8px 0',
-                }}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
         </div>
-      )}
+      </div>
     </>
   )
 }

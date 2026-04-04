@@ -1,6 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import Nav from '@/components/Nav'
+import NavServer from '@/components/NavServer'
 import Masthead from '@/components/Masthead'
 import Ticker from '@/components/Ticker'
 import SiteFooter from '@/components/SiteFooter'
@@ -48,7 +48,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Nav transparent />
+      <NavServer transparent />
 
       <main>
         <Masthead tagline={tagline} photos={mastheadPhotos} />

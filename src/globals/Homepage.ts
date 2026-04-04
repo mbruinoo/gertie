@@ -1,5 +1,30 @@
 import type { GlobalConfig } from 'payload'
-import { lexicalEditor, BoldFeature, ItalicFeature } from '@payloadcms/richtext-lexical'
+import {
+  lexicalEditor,
+  FixedToolbarFeature,
+  BoldFeature,
+  ItalicFeature,
+  UnderlineFeature,
+  LinkFeature,
+  OrderedListFeature,
+  UnorderedListFeature,
+  BlockquoteFeature,
+  HorizontalRuleFeature,
+} from '@payloadcms/richtext-lexical'
+
+const fullEditor = lexicalEditor({
+  features: () => [
+    FixedToolbarFeature(),
+    BoldFeature(),
+    ItalicFeature(),
+    UnderlineFeature(),
+    LinkFeature(),
+    OrderedListFeature(),
+    UnorderedListFeature(),
+    BlockquoteFeature(),
+    HorizontalRuleFeature(),
+  ],
+})
 
 export const Homepage: GlobalConfig = {
   slug: 'homepage',
@@ -31,9 +56,7 @@ export const Homepage: GlobalConfig = {
         {
           name: 'caption',
           type: 'richText',
-          editor: lexicalEditor({
-            features: () => [BoldFeature(), ItalicFeature()],
-          }),
+          editor: fullEditor,
         },
       ],
     },
