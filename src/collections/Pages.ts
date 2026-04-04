@@ -33,8 +33,52 @@ export const Pages: CollectionConfig = {
       },
     },
     {
-      name: 'content',
-      type: 'richText',
+      name: 'layout',
+      type: 'blocks',
+      blocks: [
+        {
+          slug: 'richText',
+          labels: { singular: 'Rich Text', plural: 'Rich Text' },
+          fields: [
+            {
+              name: 'body',
+              type: 'richText',
+              required: true,
+            },
+          ],
+        },
+        {
+          slug: 'teamSection',
+          labels: { singular: 'Team Section', plural: 'Team Sections' },
+          fields: [
+            {
+              name: 'members',
+              type: 'array',
+              required: true,
+              fields: [
+                { name: 'name', type: 'text', required: true },
+                { name: 'title', type: 'text' },
+              ],
+            },
+          ],
+        },
+        {
+          slug: 'image',
+          labels: { singular: 'Image', plural: 'Images' },
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            },
+            {
+              name: 'caption',
+              type: 'text',
+            },
+          ],
+        },
+      ],
     },
   ],
 }

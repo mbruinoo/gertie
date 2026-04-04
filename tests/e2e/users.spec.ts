@@ -1,10 +1,9 @@
 import { test, expect } from '@playwright/test'
 
-const BASE = 'http://localhost:3000'
-
 // Helpers to get auth tokens via the Payload REST API
+// Uses baseURL from playwright.config.ts — no hardcoded host
 async function getToken(request: any, email: string, password: string): Promise<string> {
-  const res = await request.post(`${BASE}/api/users/login`, {
+  const res = await request.post('/api/users/login', {
     data: { email, password },
   })
   const body = await res.json()
@@ -25,7 +24,7 @@ test.describe.serial('user lifecycle — dev creates, user logs in, dev deletes'
       process.env.PLAYWRIGHT_DEV_ADMIN_PASSWORD!,
     )
 
-    const res = await request.post(`${BASE}/api/users`, {
+    const res = await request.post('/api/users', {
       headers: { Authorization: `JWT ${token}` },
       data: { email: testEmail, password: testPassword, role: 'editor' },
     })
@@ -50,7 +49,7 @@ test.describe.serial('user lifecycle — dev creates, user logs in, dev deletes'
       process.env.PLAYWRIGHT_DEV_ADMIN_PASSWORD!,
     )
 
-    const res = await request.delete(`${BASE}/api/users/${createdUserId}`, {
+    const res = await request.delete(`/api/users/${createdUserId}`, {
       headers: { Authorization: `JWT ${token}` },
     })
     expect(res.status()).toBe(200)
@@ -75,7 +74,7 @@ test.describe('access control — user creation', () => {
       process.env.PLAYWRIGHT_TEST_PASSWORD!,
     )
 
-    const res = await request.post(`${BASE}/api/users`, {
+    const res = await request.post('/api/users', {
       headers: { Authorization: `JWT ${token}` },
       data: { email: 'shouldfail@example.com', password: 'Whatever123!', role: 'editor' },
     })
@@ -93,7 +92,7 @@ test.describe('access control — user deletion', () => {
       process.env.PLAYWRIGHT_DEV_ADMIN_EMAIL!,
       process.env.PLAYWRIGHT_DEV_ADMIN_PASSWORD!,
     )
-    const res = await request.post(`${BASE}/api/users`, {
+    const res = await request.post('/api/users', {
       headers: { Authorization: `JWT ${token}` },
       data: {
         email: `delete-target-${Date.now()}@example.com`,
@@ -112,7 +111,7 @@ test.describe('access control — user deletion', () => {
       process.env.PLAYWRIGHT_DEV_ADMIN_EMAIL!,
       process.env.PLAYWRIGHT_DEV_ADMIN_PASSWORD!,
     )
-    await request.delete(`${BASE}/api/users/${tempUserId}`, {
+    await request.delete(`/api/users/${tempUserId}`, {
       headers: { Authorization: `JWT ${token}` },
     })
   })
@@ -124,7 +123,7 @@ test.describe('access control — user deletion', () => {
       process.env.PLAYWRIGHT_TEST_PASSWORD!,
     )
 
-    const res = await request.delete(`${BASE}/api/users/${tempUserId}`, {
+    const res = await request.delete(`/api/users/${tempUserId}`, {
       headers: { Authorization: `JWT ${token}` },
     })
     expect(res.status()).toBe(403)
