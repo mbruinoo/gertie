@@ -45,5 +45,6 @@ next-env.d.ts
 playwright-report/
 test-results/
 
-# webflow exports (local reference only)
+# webflow exports and temporary font folders (local reference only)
 *.webflow
+ABC ROM*

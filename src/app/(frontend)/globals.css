@@ -2,13 +2,117 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom font faces will be added here once Matt provides the font files */
-/* Example:
+/* ── Fonts ── */
 @font-face {
-  font-family: 'GertieDisplay';
-  src: url('/fonts/GertieDisplay-Regular.woff2') format('woff2');
+  font-family: 'Abcrom';
+  src: url('/fonts/ABCROM-Book.woff2') format('woff2');
+  font-weight: 350;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Abcrom';
+  src: url('/fonts/ABCROM-BookItalic.woff2') format('woff2');
+  font-weight: 350;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Abcrom';
+  src: url('/fonts/ABCROM-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
-*/
+@font-face {
+  font-family: 'Abcrom';
+  src: url('/fonts/ABCROM-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Abcrom';
+  src: url('/fonts/ABCROM-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Abcrom';
+  src: url('/fonts/ABCROM-MediumItalic.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Abcrom';
+  src: url('/fonts/ABCROM-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Abcrom';
+  src: url('/fonts/ABCROM-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Arkbro Variable';
+  src: url('/fonts/Arkbro-Variable.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Design tokens ── */
+:root {
+  --yellow: #ffd94a;
+  --white: white;
+  --black: black;
+  --padding: 32px;
+  --maxwidth: 880px;
+  --eggshell: #ebf2d8;
+  --teal: #027f8b;
+  --emerald: #3baca3;
+  --light-green: #a2c7a5;
+  --coffee: #624d3a;
+  --orange: #f2a763;
+  --red: #e17451;
+}
+
+/* ── Base ── */
+html,
+body {
+  font-family: 'Abcrom', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5em;
+  color: #1b1b1b;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-family: 'Abcrom', Arial, sans-serif;
+  font-weight: 700;
+  line-height: 1em;
+}
+
+h3 {
+  margin-bottom: 10px;
+  font-family: 'Abcrom', Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 38px;
+}

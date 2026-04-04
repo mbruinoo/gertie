@@ -14,8 +14,12 @@ Manual checks only — things that can't be verified in Playwright.
 - [ ] Membership page matches Webflow design on mobile and desktop
 - [ ] Hub page matches Webflow design on mobile and desktop
 - [ ] CXW 2026 page matches Webflow design on mobile and desktop
-- [ ] Custom fonts render correctly across all pages
+- [ ] Custom fonts (ABC ROM) render correctly across all pages
 - [ ] Yellow CTA accent color is consistent with Webflow source
+- [ ] Homepage masthead parallax scroll effect matches Webflow feel
+- [ ] Events ticker scrolls smoothly and loops seamlessly
+- [ ] Nav frosted-glass effect renders correctly on homepage (transparent bg)
+- [ ] Masthead floating photos position and scale correctly on mobile
 
 ## Third-Party / External
 
