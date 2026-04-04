@@ -1,9 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { canPropose } from '../access/roles'
 
-// NOTE: Fields marked TBD will be updated once Matt provides the CSV files.
-// See skill.md open questions: "Events CSV files — request from Matt before building Events collection"
-
 export const Events: CollectionConfig = {
   slug: 'events',
   versions: {
@@ -11,8 +8,7 @@ export const Events: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'date', '_status', 'updatedAt'],
-    description: 'Schema is a placeholder — update once CSV files are reviewed.',
+    defaultColumns: ['title', 'category', 'date', '_status', 'updatedAt'],
   },
   access: {
     read: () => true,
@@ -28,12 +24,76 @@ export const Events: CollectionConfig = {
       required: true,
     },
     {
+      name: 'slug',
+      type: 'text',
+      required: true,
+      unique: true,
+      admin: {
+        description: 'URL slug, e.g. "art-tennis-mixer" for /events/art-tennis-mixer',
+      },
+    },
+    {
+      name: 'category',
+      type: 'select',
+      required: true,
+      options: [
+        { label: 'Party', value: 'party' },
+        { label: 'Dinner', value: 'dinner' },
+        { label: 'Talk', value: 'talk' },
+        { label: 'Exhibition', value: 'exhibition' },
+        { label: 'Other', value: 'other' },
+      ],
+    },
+    {
       name: 'date',
       type: 'date',
+      required: true,
+      admin: {
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+      },
+    },
+    {
+      name: 'timeRange',
+      type: 'text',
+      label: 'Time Range',
+      admin: {
+        description: 'e.g. "10am–1pm" or "10–11:30am"',
+      },
+    },
+    {
+      name: 'coverImage',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
+      name: 'venue',
+      type: 'relationship',
+      relationTo: 'venues',
+    },
+    {
+      name: 'primaryCta',
+      type: 'group',
+      label: 'Primary CTA (black button)',
+      fields: [
+        { name: 'label', type: 'text' },
+        { name: 'url', type: 'text' },
+      ],
+    },
+    {
+      name: 'secondaryCta',
+      type: 'group',
+      label: 'Secondary CTA (white button)',
+      fields: [
+        { name: 'label', type: 'text' },
+        { name: 'url', type: 'text' },
+      ],
     },
     {
       name: 'description',
       type: 'richText',
+      label: 'About the Event',
     },
   ],
 }

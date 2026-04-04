@@ -9,6 +9,7 @@ import { Users } from './collections/Users'
 import { Pages } from './collections/Pages'
 import { Exhibitions } from './collections/Exhibitions'
 import { Events } from './collections/Events'
+import { Venues } from './collections/Venues'
 import { Media } from './collections/Media'
 
 import { Navigation } from './globals/Navigation'
@@ -25,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Pages, Exhibitions, Events, Media],
+  collections: [Users, Pages, Exhibitions, Events, Venues, Media],
   globals: [Navigation, Footer, Homepage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
