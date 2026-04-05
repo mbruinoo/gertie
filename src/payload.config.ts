@@ -16,6 +16,7 @@ import { Tags } from './collections/Tags'
 import { Navigation } from './globals/Navigation'
 import { Footer } from './globals/Footer'
 import { Homepage } from './globals/Homepage'
+import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,7 +29,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Pages, Exhibitions, Events, Venues, Media, Tags],
-  globals: [Navigation, Footer, Homepage],
+  globals: [Navigation, Footer, Homepage, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

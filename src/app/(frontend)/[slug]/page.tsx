@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
@@ -11,6 +12,26 @@ import MemberEventsBlock from '@/components/MemberEventsBlock'
 import CuratedExperiencesBlock from '@/components/CuratedExperiencesBlock'
 import HubHeroBlock from '@/components/HubHeroBlock'
 import HubInfoBlock from '@/components/HubInfoBlock'
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const payload = await getPayload({ config })
+  const [result, settings] = await Promise.all([
+    payload.find({ collection: 'pages', where: { slug: { equals: slug } }, limit: 1, depth: 1 }).catch(() => null),
+    payload.findGlobal({ slug: 'site-settings', depth: 1 }).catch(() => null),
+  ])
+  const page = result?.docs?.[0] as any
+  const seo = page?.seo
+  const title = seo?.ogTitle || page?.title || (settings as any)?.siteTitle || 'Gertie'
+  const description = seo?.ogDescription || (settings as any)?.defaultDescription || ''
+  const ogImage = seo?.ogImage?.url || (settings as any)?.defaultOgImage?.url || null
+  return {
+    title,
+    description,
+    openGraph: { title, description, ...(ogImage ? { images: [{ url: ogImage }] } : {}) },
+    twitter: { card: 'summary_large_image', title, description, ...(ogImage ? { images: [ogImage] } : {}) },
+  }
+}
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

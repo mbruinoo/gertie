@@ -69,6 +69,32 @@ export const Pages: CollectionConfig = {
       defaultValue: false,
     },
     {
+      name: 'seo',
+      type: 'group',
+      label: 'SEO / Social Sharing',
+      fields: [
+        {
+          name: 'ogTitle',
+          type: 'text',
+          label: 'OG Title',
+          admin: { description: 'Overrides the page title for social sharing. Leave blank to use page title.' },
+        },
+        {
+          name: 'ogDescription',
+          type: 'textarea',
+          label: 'OG Description',
+          admin: { description: 'Overrides the site default description for this page.' },
+        },
+        {
+          name: 'ogImage',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'OG Image',
+          admin: { description: 'Overrides the site default OG image. Recommended: 1200×630px PNG.' },
+        },
+      ],
+    },
+    {
       name: 'layout',
       type: 'blocks',
       blocks: [

@@ -1,15 +1,37 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 import './globals.css'
 
-export const metadata: Metadata = {
-  title: 'Gertie — Contemporary Art, Chicago',
-  description: 'From the world to Chicago and Chicago to the world.',
-  icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const payload = await getPayload({ config })
+  const settings = await payload.findGlobal({ slug: 'site-settings' }).catch(() => null)
+
+  const title = (settings as any)?.siteTitle || 'Gertie — Contemporary Art, Chicago'
+  const description = (settings as any)?.defaultDescription || 'From the world to Chicago and Chicago to the world.'
+  const ogImage = (settings as any)?.defaultOgImage?.url ?? null
+
+  return {
+    title,
+    description,
+    icons: {
+      icon: '/favicon.svg',
+      shortcut: '/favicon.svg',
+      apple: '/favicon.svg',
+    },
+    openGraph: {
+      title,
+      description,
+      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      ...(ogImage ? { images: [ogImage] } : {}),
+    },
+  }
 }
 
 export default function RootLayout({

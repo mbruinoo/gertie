@@ -41,6 +41,32 @@ export const Homepage: GlobalConfig = {
       label: 'Tagline',
     },
     {
+      name: 'seo',
+      type: 'group',
+      label: 'SEO / Social Sharing',
+      fields: [
+        {
+          name: 'ogTitle',
+          type: 'text',
+          label: 'OG Title',
+          admin: { description: 'Overrides the site title for social sharing. Leave blank to use site title.' },
+        },
+        {
+          name: 'ogDescription',
+          type: 'textarea',
+          label: 'OG Description',
+          admin: { description: 'Overrides the site default description for the homepage.' },
+        },
+        {
+          name: 'ogImage',
+          type: 'upload',
+          relationTo: 'media',
+          label: 'OG Image',
+          admin: { description: 'Recommended: 1200×630px PNG.' },
+        },
+      ],
+    },
+    {
       name: 'mastheadPhotos',
       type: 'array',
       label: 'Masthead Photos',
