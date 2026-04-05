@@ -1,20 +1,17 @@
-import Image from 'next/image'
-
 export default function HubHeroBlock({
   image,
 }: {
-  image?: { url?: string; alt?: string; width?: number; height?: number } | null
+  image?: { url?: string; alt?: string } | null
 }) {
   if (!image?.url) return null
   return (
     <div className="hub-hero-wrap">
       <div className="hub-hero-image">
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={image.url}
           alt={image.alt ?? 'Gertie Hub'}
-          fill
-          style={{ objectFit: 'cover' }}
-          priority
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       </div>
     </div>
