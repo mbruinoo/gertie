@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { buildMetadata } from '@/lib/buildMetadata'
 import NavServer from '@/components/NavServer'
 import Masthead from '@/components/Masthead'
 import Ticker from '@/components/Ticker'
@@ -13,16 +14,13 @@ export async function generateMetadata(): Promise<Metadata> {
     payload.findGlobal({ slug: 'homepage', depth: 1 }).catch(() => null),
     payload.findGlobal({ slug: 'site-settings', depth: 1 }).catch(() => null),
   ])
-  const seo = (homepage as any)?.seo
-  const title = seo?.ogTitle || (settings as any)?.siteTitle || 'Gertie — Contemporary Art, Chicago'
-  const description = seo?.ogDescription || (settings as any)?.defaultDescription || 'From the world to Chicago and Chicago to the world.'
-  const ogImage = seo?.ogImage?.url || (settings as any)?.defaultOgImage?.url || null
-  return {
-    title,
-    description,
-    openGraph: { title, description, ...(ogImage ? { images: [{ url: ogImage }] } : {}) },
-    twitter: { card: 'summary_large_image', title, description, ...(ogImage ? { images: [ogImage] } : {}) },
-  }
+  const hp = homepage as any
+  const firstMastheadImage = hp?.mastheadPhotos?.[0]?.image?.url ?? null
+  return buildMetadata({
+    seo: hp?.seo,
+    fallbackImageUrl: firstMastheadImage,
+    settings,
+  })
 }
 
 export default async function HomePage() {

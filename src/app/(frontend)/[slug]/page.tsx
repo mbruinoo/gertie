@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { buildMetadata, firstImageFromLayout } from '@/lib/buildMetadata'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import NavServer from '@/components/NavServer'
 import PageHero from '@/components/PageHero'
@@ -21,16 +22,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     payload.findGlobal({ slug: 'site-settings', depth: 1 }).catch(() => null),
   ])
   const page = result?.docs?.[0] as any
-  const seo = page?.seo
-  const title = seo?.ogTitle || page?.title || (settings as any)?.siteTitle || 'Gertie'
-  const description = seo?.ogDescription || (settings as any)?.defaultDescription || ''
-  const ogImage = seo?.ogImage?.url || (settings as any)?.defaultOgImage?.url || null
-  return {
-    title,
-    description,
-    openGraph: { title, description, ...(ogImage ? { images: [{ url: ogImage }] } : {}) },
-    twitter: { card: 'summary_large_image', title, description, ...(ogImage ? { images: [ogImage] } : {}) },
-  }
+  const firstPageImage = firstImageFromLayout(page?.layout ?? [])
+  return buildMetadata({
+    seo: page?.seo,
+    fallbackTitle: page?.title,
+    fallbackImageUrl: firstPageImage,
+    settings,
+  })
 }
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
