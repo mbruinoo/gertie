@@ -27,5 +27,22 @@ export const Footer: GlobalConfig = {
       type: 'text',
       label: 'Copyright Text',
     },
+    {
+      name: 'privacyPolicyPdf',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Privacy Policy / Terms of Use PDF',
+      admin: {
+        description: 'Upload the PDF used for both the Terms of Use and Privacy Policy footer links.',
+      },
+    },
+    {
+      name: 'contactEmail',
+      type: 'text',
+      label: 'Contact Email',
+      admin: {
+        description: 'Used for "Contact Us" and "Press Inquiries" footer links.',
+      },
+    },
   ],
 }

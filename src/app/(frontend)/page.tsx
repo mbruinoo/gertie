@@ -84,6 +84,8 @@ export default async function HomePage() {
       <SiteFooter
         klaviyoEmbedCode={(footer as any)?.klaviyoEmbedCode}
         instagramUrl={(footer as any)?.instagramUrl}
+        privacyPolicyPdfUrl={(footer as any)?.privacyPolicyPdf?.url}
+        contactEmail={(footer as any)?.contactEmail}
         copyrightText={(footer as any)?.copyrightText}
       />
     </>

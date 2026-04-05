@@ -196,15 +196,13 @@ h5 {
 }
 
 .page-section-body p {
-  margin: 0 0 1em;
+  margin: 0;
   font-size: 24px;
   font-weight: 300;
   line-height: 29px;
 }
 
-.page-section-body p:last-child {
-  margin-bottom: 0;
-}
+
 
 @media screen and (max-width: 767px) {
   .page-section {
@@ -1112,7 +1110,7 @@ h3.exhibition-body-label {
 .member-event-pill {
   display: inline-block;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 100;
   border-radius: 100px;
   padding: 3px 9px;
   line-height: 1.4;
@@ -1121,8 +1119,17 @@ h3.exhibition-body-label {
 .member-event-title {
   font-size: 14px;
   font-weight: 700;
-  margin: 0 0 4px;
+  margin: 0;
   line-height: 1.3;
+}
+
+@keyframes memberEventFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.member-event-card--new {
+  animation: memberEventFadeIn 0.3s ease both;
 }
 
 .member-event-meta {
@@ -1220,6 +1227,7 @@ h3.exhibition-body-label {
 
   .curated-experiences-grid {
     grid-template-columns: 1fr;
+    margin-top: 32px;
   }
 
   .curated-experience-title {

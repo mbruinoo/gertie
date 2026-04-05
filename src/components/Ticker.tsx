@@ -80,7 +80,7 @@ export default function Ticker({ items }: { items: TickerItem[] }) {
             display: flex;
             white-space: nowrap;
             width: max-content;
-            animation: ticker-scroll 20s linear infinite;
+            animation: ticker-scroll 60s linear infinite;
             align-items: center;
           }
         `}</style>

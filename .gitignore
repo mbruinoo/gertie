@@ -47,4 +47,8 @@ test-results/
 
 # webflow exports and temporary font folders (local reference only)
 *.webflow
+*.webflow*/
 ABC ROM*
+
+# local media staging folders (not for version control)
+ornament and ornamentation to add (gitignore this)

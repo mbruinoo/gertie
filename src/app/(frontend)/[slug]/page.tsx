@@ -85,10 +85,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 ctaUrl={block.ctaUrl}
                 upcomingItems={block.upcomingItems}
                 disclaimer={block.disclaimer}
-                experiences={(block.experiences ?? []).map((e: any) => ({
-                  ...e,
-                  image: e.image ? { url: e.image.url, alt: e.image.alt, width: e.image.width, height: e.image.height } : null,
-                }))}
               />
             )
           }

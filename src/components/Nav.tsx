@@ -16,7 +16,7 @@ const defaultNavLinks: NavLink[] = [
 
 const defaultCtaLinks: NavLink[] = [
   { label: 'Become a member', href: '/membership' },
-  { label: 'Sign in', href: '/login' },
+  { label: 'Sign in', href: 'https://join.gertie.co/' },
 ]
 
 const linkHover = {
@@ -53,8 +53,14 @@ export default function Nav({
   ctaLinks?: NavLink[]
 }) {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [cxwLabel, setCxwLabel] = useState<Record<string, boolean>>({})
   const pathname = usePathname()
   const isHome = pathname === '/'
+
+  const getLinkLabel = (link: NavLink) => {
+    if (link.accent && cxwLabel[link.href]) return 'Coming Soon'
+    return link.label
+  }
 
   return (
     <>
@@ -70,39 +76,46 @@ export default function Nav({
           top: 0,
           zIndex: 100,
           boxSizing: 'border-box',
-          backgroundColor: transparent ? 'transparent' : 'white',
+          backgroundColor: 'transparent',
         }}
       >
         {/* Left: wordmark (non-homepage) + nav links pill */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div
+          style={{
+            display: 'flex',
+            gap: '4px',
+            backdropFilter: 'brightness(160%) blur(4px)',
+            WebkitBackdropFilter: 'brightness(160%) blur(4px)',
+            backgroundColor: 'rgba(255,255,255,0.32)',
+            borderRadius: '30px',
+            padding: '6px 10px',
+          }}
+        >
           {!transparent && (
             <Link href="/" style={{ ...linkStyle, fontWeight: 500, fontSize: '22px' }}>
               Gertie
             </Link>
           )}
-
-          <div
-            style={{
-              display: 'flex',
-              gap: '4px',
-              backdropFilter: 'brightness(160%) blur(4px)',
-              WebkitBackdropFilter: 'brightness(160%) blur(4px)',
-              backgroundColor: 'rgba(255,255,255,0.32)',
-              borderRadius: '30px',
-              padding: '6px 10px',
-            }}
-          >
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                style={{ ...linkStyle, fontWeight: link.accent ? 500 : 300 }}
-                {...linkHover}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              style={{ ...linkStyle, fontWeight: link.accent ? 500 : 300 }}
+              {...linkHover}
+              {...(link.accent ? {
+                onMouseEnter: (e: React.MouseEvent) => {
+                  setCxwLabel(s => ({ ...s, [link.href]: true }));
+                  (linkHover.onMouseEnter as any)(e)
+                },
+                onMouseLeave: (e: React.MouseEvent) => {
+                  setCxwLabel(s => ({ ...s, [link.href]: false }));
+                  (linkHover.onMouseLeave as any)(e)
+                },
+              } : {})}
+            >
+              {getLinkLabel(link)}
+            </Link>
+          ))}
         </div>
 
         {/* Right: CTAs */}
@@ -136,7 +149,7 @@ export default function Nav({
           padding: '0 var(--padding)',
           height: '56px',
           alignItems: 'center',
-          justifyContent: 'flex-end',
+          justifyContent: 'space-between',
           width: '100svw',
           position: 'fixed',
           top: 0,
@@ -145,6 +158,13 @@ export default function Nav({
           backgroundColor: 'white',
         }}
       >
+        {!isHome ? (
+          <Link href="/" style={{ ...linkStyle, fontWeight: 500, fontSize: '22px', paddingLeft: 0 }}>
+            Gertie
+          </Link>
+        ) : (
+          <span />
+        )}
         <button
           onClick={() => setMobileOpen((v) => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
@@ -201,7 +221,14 @@ export default function Nav({
           <Link
             key={link.href}
             href={link.href}
-            onClick={() => setMobileOpen(false)}
+            onClick={(e) => {
+              if (link.accent) {
+                e.preventDefault()
+                setCxwLabel(s => ({ ...s, [link.href]: !s[link.href] }))
+              } else {
+                setMobileOpen(false)
+              }
+            }}
             style={{
               fontFamily: 'Abcrom, Arial, sans-serif',
               fontSize: '32px',
@@ -212,7 +239,7 @@ export default function Nav({
               padding: '8px 0',
             }}
           >
-            {link.label}
+            {getLinkLabel(link)}
           </Link>
         ))}
 
