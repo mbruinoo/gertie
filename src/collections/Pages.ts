@@ -63,6 +63,12 @@ export const Pages: CollectionConfig = {
       },
     },
     {
+      name: 'hideHeroRule',
+      type: 'checkbox',
+      label: 'Hide hero rule (hr)',
+      defaultValue: false,
+    },
+    {
       name: 'layout',
       type: 'blocks',
       blocks: [
@@ -143,6 +149,96 @@ export const Pages: CollectionConfig = {
             {
               name: 'caption',
               type: 'text',
+            },
+          ],
+        },
+        {
+          slug: 'membershipOptions',
+          labels: { singular: 'Membership Options', plural: 'Membership Options' },
+          fields: [
+            {
+              name: 'cards',
+              type: 'array',
+              label: 'Cards',
+              minRows: 2,
+              maxRows: 2,
+              fields: [
+                { name: 'cardType', type: 'text', label: 'Card Type', required: true },
+                { name: 'tagline', type: 'text', label: 'Tagline' },
+                { name: 'tierName', type: 'text', label: 'Tier Name' },
+                { name: 'price', type: 'text', label: 'Price / Availability' },
+                { name: 'ctaLabel', type: 'text', label: 'CTA Label' },
+                { name: 'ctaUrl', type: 'text', label: 'CTA URL' },
+                {
+                  name: 'ctaStyle',
+                  type: 'select',
+                  label: 'CTA Style',
+                  options: [
+                    { label: 'Filled (yellow)', value: 'filled' },
+                    { label: 'Outline', value: 'outline' },
+                  ],
+                  defaultValue: 'filled',
+                },
+                {
+                  name: 'perks',
+                  type: 'array',
+                  label: 'Perks',
+                  fields: [{ name: 'text', type: 'text', required: true }],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          slug: 'memberEvents',
+          labels: { singular: 'Member Events Section', plural: 'Member Events Sections' },
+          fields: [
+            { name: 'subtitle', type: 'text', label: 'Subtitle', admin: { description: 'e.g. "Interested in our member events?"' } },
+            { name: 'ctaLabel', type: 'text', label: 'CTA Label', defaultValue: 'Learn more' },
+            { name: 'ctaUrl', type: 'text', label: 'CTA URL' },
+          ],
+        },
+        {
+          slug: 'hubHero',
+          labels: { singular: 'Hub Hero Image', plural: 'Hub Hero Images' },
+          fields: [
+            { name: 'image', type: 'upload', relationTo: 'media', label: 'Image' },
+          ],
+        },
+        {
+          slug: 'hubInfo',
+          labels: { singular: 'Hub Info (Address & Hours)', plural: 'Hub Info Sections' },
+          fields: [
+            { name: 'address', type: 'textarea', label: 'Address' },
+            { name: 'hours', type: 'textarea', label: 'Hours' },
+          ],
+        },
+        {
+          slug: 'curatedExperiences',
+          labels: { singular: 'Curated Experiences', plural: 'Curated Experiences' },
+          fields: [
+            { name: 'ctaLabel', type: 'text', label: 'CTA Label', defaultValue: 'Learn more' },
+            { name: 'ctaUrl', type: 'text', label: 'CTA URL' },
+            {
+              name: 'upcomingItems',
+              type: 'array',
+              label: 'Upcoming Trips',
+              fields: [
+                { name: 'title', type: 'text', required: true },
+                { name: 'note', type: 'text', label: 'Note (e.g. date in parens)' },
+              ],
+            },
+            { name: 'disclaimer', type: 'text', label: 'Disclaimer' },
+            {
+              name: 'experiences',
+              type: 'array',
+              label: 'Curated Experience Items',
+              fields: [
+                { name: 'date', type: 'text', label: 'Date (e.g. April 2026)' },
+                { name: 'title', type: 'text', required: true },
+                { name: 'image', type: 'upload', relationTo: 'media', label: 'Image' },
+                { name: 'body', type: 'textarea', label: 'Body Text' },
+              ],
             },
           ],
         },
