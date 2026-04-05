@@ -1,10 +1,11 @@
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import MastheadScroll from './MastheadScroll'
 
 type MastheadPhoto = {
   url: string
   alt: string
-  caption?: object | null
+  caption?: SerializedEditorState | null
 }
 
 type MastheadProps = {

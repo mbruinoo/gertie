@@ -1,9 +1,10 @@
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import AccordionController from './AccordionController'
 
 type Item = {
-  name?: object | null
-  description?: object | null
+  name?: SerializedEditorState | null
+  description?: SerializedEditorState | null
 }
 
 export default function TeamAccordion({ members }: { members: Item[] }) {
