@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
 type NavLink = { label: string; href: string; accent?: boolean }
@@ -43,6 +43,52 @@ const linkStyle: React.CSSProperties = {
   transition: 'background-color .2s cubic-bezier(.645,.045,.355,1), color .2s cubic-bezier(.645,.045,.355,1)',
 }
 
+function AccentNavItem({ link, hoverLabel, linkStyle, linkHover }: {
+  link: NavLink
+  hoverLabel: string
+  linkStyle: React.CSSProperties
+  linkHover: { onMouseEnter: (e: React.MouseEvent) => void; onMouseLeave: (e: React.MouseEvent) => void }
+}) {
+  const [hovered, setHovered] = useState(false)
+  const labelRef = useRef<HTMLSpanElement>(null)
+  const hoverRef = useRef<HTMLSpanElement>(null)
+  const [scale, setScale] = useState(1)
+
+  useEffect(() => {
+    if (labelRef.current && hoverRef.current) {
+      setScale(labelRef.current.offsetWidth / hoverRef.current.offsetWidth)
+    }
+  }, [])
+
+  return (
+    <span
+      style={{ ...linkStyle, fontWeight: 500, cursor: 'default', position: 'relative', display: 'inline-block' }}
+      onMouseEnter={(e) => { setHovered(true); linkHover.onMouseEnter(e) }}
+      onMouseLeave={(e) => { setHovered(false); linkHover.onMouseLeave(e) }}
+    >
+      {/* Sizer: always holds space for the original label */}
+      <span ref={labelRef} style={{ visibility: 'hidden', whiteSpace: 'nowrap' }}>{link.label}</span>
+      {/* Hover label: measured offscreen then scaled to fit */}
+      <span
+        ref={hoverRef}
+        style={{
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          whiteSpace: 'nowrap',
+          transform: hovered ? `scale(${scale})` : 'scale(1)',
+          opacity: hovered ? 1 : 0,
+        }}
+      >
+        {hoverLabel}
+      </span>
+      {/* Original label */}
+      <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered ? 0 : 1 }}>
+        {link.label}
+      </span>
+    </span>
+  )
+}
+
 export default function Nav({
   transparent = false,
   navLinks = defaultNavLinks,
@@ -53,14 +99,8 @@ export default function Nav({
   ctaLinks?: NavLink[]
 }) {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [cxwLabel, setCxwLabel] = useState<Record<string, boolean>>({})
   const pathname = usePathname()
   const isHome = pathname === '/'
-
-  const getLinkLabel = (link: NavLink) => {
-    if (link.accent && cxwLabel[link.href]) return 'Coming Soon'
-    return link.label
-  }
 
   return (
     <>
@@ -96,26 +136,26 @@ export default function Nav({
               Gertie
             </Link>
           )}
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              style={{ ...linkStyle, fontWeight: link.accent ? 500 : 300 }}
-              {...linkHover}
-              {...(link.accent ? {
-                onMouseEnter: (e: React.MouseEvent) => {
-                  setCxwLabel(s => ({ ...s, [link.href]: true }));
-                  (linkHover.onMouseEnter as any)(e)
-                },
-                onMouseLeave: (e: React.MouseEvent) => {
-                  setCxwLabel(s => ({ ...s, [link.href]: false }));
-                  (linkHover.onMouseLeave as any)(e)
-                },
-              } : {})}
-            >
-              {getLinkLabel(link)}
-            </Link>
-          ))}
+          {navLinks.map((link) =>
+            link.accent ? (
+              <AccentNavItem
+                key={link.href}
+                link={link}
+                hoverLabel="Coming Soon"
+                linkStyle={linkStyle}
+                linkHover={linkHover}
+              />
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                style={{ ...linkStyle, fontWeight: 300 }}
+                {...linkHover}
+              >
+                {link.label}
+              </Link>
+            )
+          )}
         </div>
 
         {/* Right: CTAs */}
@@ -217,31 +257,40 @@ export default function Nav({
             Gertie
           </Link>
         )}
-        {navLinks.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            onClick={(e) => {
-              if (link.accent) {
-                e.preventDefault()
-                setCxwLabel(s => ({ ...s, [link.href]: !s[link.href] }))
-              } else {
-                setMobileOpen(false)
-              }
-            }}
-            style={{
-              fontFamily: 'Abcrom, Arial, sans-serif',
-              fontSize: '32px',
-              fontWeight: link.accent ? 500 : 300,
-              lineHeight: '1.2',
-              color: '#1b1b1b',
-              textDecoration: 'none',
-              padding: '8px 0',
-            }}
-          >
-            {getLinkLabel(link)}
-          </Link>
-        ))}
+        {navLinks.map((link) =>
+          link.accent ? (
+            <span
+              key={link.href}
+              style={{
+                fontFamily: 'Abcrom, Arial, sans-serif',
+                fontSize: '32px',
+                fontWeight: 500,
+                lineHeight: '1.2',
+                color: '#1b1b1b',
+                padding: '8px 0',
+              }}
+            >
+              {link.label} <span style={{ fontSize: '18px', fontWeight: 300 }}>Coming Soon</span>
+            </span>
+          ) : (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMobileOpen(false)}
+              style={{
+                fontFamily: 'Abcrom, Arial, sans-serif',
+                fontSize: '32px',
+                fontWeight: 300,
+                lineHeight: '1.2',
+                color: '#1b1b1b',
+                textDecoration: 'none',
+                padding: '8px 0',
+              }}
+            >
+              {link.label}
+            </Link>
+          )
+        )}
 
         <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '4px' }}>
           {ctaLinks.map((link) => (

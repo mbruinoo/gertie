@@ -27,13 +27,17 @@ export async function GET(
     const ext = filename.split('.').pop()?.toLowerCase() ?? ''
     const contentType = MIME_TYPES[ext] ?? 'application/octet-stream'
 
-    return new Response(file, {
-      headers: {
-        'Content-Type': contentType,
-        'Content-Length': String(file.length),
-        'Cache-Control': 'public, max-age=3600',
-      },
-    })
+    const headers: Record<string, string> = {
+      'Content-Type': contentType,
+      'Content-Length': String(file.length),
+      'Cache-Control': 'public, max-age=3600',
+    }
+
+    if (ext === 'pdf') {
+      headers['Content-Disposition'] = `attachment; filename="${filename}"`
+    }
+
+    return new Response(file, { headers })
   } catch {
     return new Response('Not Found', { status: 404 })
   }

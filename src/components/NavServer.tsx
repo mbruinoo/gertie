@@ -6,7 +6,11 @@ export default async function NavServer({ transparent = false }: { transparent?:
   const payload = await getPayload({ config })
   const nav = await payload.findGlobal({ slug: 'navigation' }).catch(() => null)
 
-  const navLinks = (nav?.navLinks ?? []).map((l: any) => ({ label: l.label, href: l.url }))
+  const navLinks = (nav?.navLinks ?? []).map((l: any) => ({
+    label: l.label,
+    href: l.url,
+    accent: !!l.comingSoon,
+  }))
   const ctaLinks = (nav?.ctaLinks ?? []).map((l: any) => ({ label: l.label, href: l.url }))
 
   return (

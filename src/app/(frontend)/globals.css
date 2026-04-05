@@ -1036,6 +1036,7 @@ h3.exhibition-body-label {
   cursor: pointer;
   align-self: flex-start;
   margin-bottom: 24px;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .membership-cta--filled {
@@ -1044,10 +1045,20 @@ h3.exhibition-body-label {
   border: none;
 }
 
+.membership-cta--filled:hover {
+  background: #1b1b1b;
+  color: #fff;
+}
+
 .membership-cta--outline {
   background: transparent;
   color: #1b1b1b;
   border: 1px solid #1b1b1b;
+}
+
+.membership-cta--outline:hover {
+  background: #1b1b1b;
+  color: #fff;
 }
 
 .membership-perks {

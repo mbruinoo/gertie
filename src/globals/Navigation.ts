@@ -6,7 +6,7 @@ export const Navigation: GlobalConfig = {
   versions: { drafts: false },
   access: {
     read: () => true,
-    update: ({ req: { user } }) => user?.role === 'dev' || user?.role === 'admin',
+    update: ({ req: { user } }) => !!user,
   },
   fields: [
     {
@@ -16,6 +16,7 @@ export const Navigation: GlobalConfig = {
       fields: [
         { name: 'label', type: 'text', required: true },
         { name: 'url', type: 'text', required: true },
+        { name: 'comingSoon', type: 'checkbox', label: 'Coming Soon (non-clickable)', defaultValue: false },
       ],
     },
     {
