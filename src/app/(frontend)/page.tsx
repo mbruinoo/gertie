@@ -56,6 +56,7 @@ export default async function HomePage() {
     const prefix = event.tickerPrefix ? `${event.tickerPrefix}: ` : ''
     return {
       label: prefix + [event.title, venue, date].filter(Boolean).join(' · '),
+      url: event.registrationUrl ?? '/membership',
     }
   })
 

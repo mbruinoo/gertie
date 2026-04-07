@@ -40,6 +40,7 @@ export default async function MemberEventsBlock({
       slug: t.slug,
       color: t.color ?? null,
     })),
+    registrationUrl: event.registrationUrl ?? null,
   }))
 
   return (

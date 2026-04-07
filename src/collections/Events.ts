@@ -33,6 +33,14 @@ export const Events: CollectionConfig = {
       },
     },
     {
+      name: 'registrationUrl',
+      type: 'text',
+      label: 'Registration URL',
+      admin: {
+        description: 'Override link for this event (e.g. an Early.work URL). Defaults to /membership.',
+      },
+    },
+    {
       name: 'tickerPrefix',
       type: 'select',
       label: 'Ticker Prefix',

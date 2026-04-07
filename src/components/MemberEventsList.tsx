@@ -57,6 +57,7 @@ interface EventItem {
   coverImageUrl: string | null
   venueName: string
   tags: Array<{ id: number; name: string; slug: string; color: string | null }>
+  registrationUrl: string | null
 }
 
 const PAGE_SIZE = 8
@@ -85,10 +86,15 @@ export default function MemberEventsList({ events }: { events: EventItem[] }) {
             : ''
           const meta = [event.venueName, dateStr].filter(Boolean).join(' · ')
 
+          const href = event.registrationUrl ?? '/membership'
           return (
-            <div
+            <a
               key={event.id}
+              href={href}
+              target={event.registrationUrl ? '_blank' : undefined}
+              rel={event.registrationUrl ? 'noopener noreferrer' : undefined}
               className={`member-event-card${isNew ? ' member-event-card--new' : ''}`}
+              style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
             >
               <div
                 className="member-event-image"
@@ -121,7 +127,7 @@ export default function MemberEventsList({ events }: { events: EventItem[] }) {
                 <p className="member-event-title">{displayTitle(event.title)}</p>
                 {meta && <h6 className="member-event-meta">{meta}</h6>}
               </div>
-            </div>
+            </a>
           )
         })}
       </div>

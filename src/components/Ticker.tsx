@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import Link from 'next/link'
 
 type TickerItem = {
   label: string
+  url?: string
 }
 
 export default function Ticker({ items }: { items: TickerItem[] }) {
@@ -19,32 +19,32 @@ export default function Ticker({ items }: { items: TickerItem[] }) {
   if (!items.length) return null
 
   const itemEls = items.map((item, i) => (
-    <span
+    <a
       key={i}
+      href={item.url ?? '/membership'}
       style={{
         fontSize: '14px',
         lineHeight: '18px',
         paddingRight: '40px',
         whiteSpace: 'nowrap',
         flexShrink: 0,
+        textDecoration: 'none',
+        color: 'inherit',
       }}
     >
       {item.label}
-    </span>
+    </a>
   ))
 
   return (
-    <Link
-      href="/membership"
+    <div
       style={{
         display: 'flex',
         backgroundColor: '#ffdb7d',
         height: '60px',
         overflow: 'hidden',
         alignItems: 'center',
-        textDecoration: 'none',
         color: 'inherit',
-        cursor: 'pointer',
       }}
     >
       {/* "Upcoming" pill */}
@@ -89,12 +89,12 @@ export default function Ticker({ items }: { items: TickerItem[] }) {
             align-items: center;
           }
         `}</style>
-        <div className="ticker-inner">
+        <div className="ticker-inner" ref={innerRef}>
           {/* Render twice for seamless loop */}
           {itemEls}
           {itemEls}
         </div>
       </div>
-    </Link>
+    </div>
   )
 }

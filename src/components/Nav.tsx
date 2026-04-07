@@ -16,7 +16,7 @@ const defaultNavLinks: NavLink[] = [
 
 const defaultCtaLinks: NavLink[] = [
   { label: 'Become a member', href: '/membership' },
-  { label: 'Sign in', href: 'https://join.gertie.co/' },
+  { label: 'Sign in', href: 'https://www.early.work/login' },
 ]
 
 const linkHover = {
