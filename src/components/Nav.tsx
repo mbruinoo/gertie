@@ -119,23 +119,34 @@ export default function Nav({
           backgroundColor: 'transparent',
         }}
       >
-        {/* Left: wordmark (non-homepage) + nav links pill */}
+        {/* Center: wordmark (non-homepage) */}
+        {!transparent && (
+          <Link
+            href="/"
+            style={{
+              ...linkStyle,
+              fontWeight: 500,
+              fontSize: '22px',
+              position: 'absolute',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              top: 'var(--padding)',
+            }}
+          >
+            Gertie
+          </Link>
+        )}
+
+        {/* Left: nav links pill */}
         <div
           style={{
             display: 'flex',
             gap: '4px',
-            backdropFilter: 'brightness(160%) blur(4px)',
-            WebkitBackdropFilter: 'brightness(160%) blur(4px)',
-            backgroundColor: 'rgba(255,255,255,0.32)',
+            backgroundColor: '#fff',
             borderRadius: '30px',
             padding: '6px 10px',
           }}
         >
-          {!transparent && (
-            <Link href="/" style={{ ...linkStyle, fontWeight: 500, fontSize: '22px' }}>
-              Gertie
-            </Link>
-          )}
           {navLinks.map((link) =>
             link.accent ? (
               <AccentNavItem
@@ -163,8 +174,7 @@ export default function Nav({
           style={{
             display: 'flex',
             gap: '4px',
-            backdropFilter: 'blur(4px)',
-            WebkitBackdropFilter: 'blur(4px)',
+            backgroundColor: '#fff',
             borderRadius: '30px',
             padding: '6px 10px',
           }}

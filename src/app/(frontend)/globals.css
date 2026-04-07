@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  background: #ffdb7d;
+}
+
 /* ── Fonts ── */
 @font-face {
   font-family: 'Abcrom';
@@ -157,8 +161,14 @@ h5 {
 }
 
 @media screen and (max-width: 767px) {
+  .page-hero {
+    padding: calc(var(--padding) * 2) var(--padding) 0;
+  }
   .page-hero-title {
     font-size: 48px;
+  }
+  h3 {
+    font-size: 30px;
   }
 }
 
@@ -172,7 +182,7 @@ h5 {
 
 .page-section-label {
   grid-area: label;
-  padding-top: 2px;
+  padding-top: 15px;
 }
 
 .page-section-label p {
@@ -359,11 +369,21 @@ details[open] .team-accordion-chevron {
   font-size: 14px;
   line-height: 18px;
   margin-top: 6px;
+  margin-bottom: 6px;
   color: #1b1b1b;
 }
 
 .masthead-caption p {
   margin: 0;
+}
+
+.masthead-caption a {
+  color: #1b1b1b;
+  text-decoration: none;
+}
+
+.masthead-caption a:hover {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 767px) {
@@ -426,7 +446,7 @@ details[open] .team-accordion-chevron {
     max-width: 100%;
   }
   .masthead-heading {
-    font-size: 120px;
+    font-size: 100px;
     line-height: 80px;
     margin-bottom: 0.1em;
   }
@@ -982,6 +1002,9 @@ h3.exhibition-body-label {
     justify-content: space-between;
     gap: 16px;
   }
+  .hub-info-value {
+    font-size: 20px;
+  }
 }
 
 /* ── Membership page ── */
@@ -1029,6 +1052,7 @@ h3.exhibition-body-label {
 .membership-cta {
   display: inline-block;
   padding: 8px 18px;
+  margin-top: 12px;
   border-radius: 100px;
   font-size: 14px;
   font-weight: 700;

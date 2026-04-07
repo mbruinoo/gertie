@@ -33,6 +33,19 @@ export const Events: CollectionConfig = {
       },
     },
     {
+      name: 'tickerPrefix',
+      type: 'select',
+      label: 'Ticker Prefix',
+      options: [
+        { label: 'Exhibition', value: 'EXHIBITION' },
+        { label: 'Membership', value: 'MEMBERSHIP' },
+        { label: 'Hub', value: 'HUB' },
+      ],
+      admin: {
+        description: 'Label shown before this event in the homepage ticker.',
+      },
+    },
+    {
       name: 'category',
       type: 'select',
       required: true,

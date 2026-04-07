@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Link from 'next/link'
 
 type TickerItem = {
   label: string
@@ -33,13 +34,17 @@ export default function Ticker({ items }: { items: TickerItem[] }) {
   ))
 
   return (
-    <div
+    <Link
+      href="/membership"
       style={{
         display: 'flex',
         backgroundColor: '#ffdb7d',
         height: '60px',
         overflow: 'hidden',
         alignItems: 'center',
+        textDecoration: 'none',
+        color: 'inherit',
+        cursor: 'pointer',
       }}
     >
       {/* "Upcoming" pill */}
@@ -90,6 +95,6 @@ export default function Ticker({ items }: { items: TickerItem[] }) {
           {itemEls}
         </div>
       </div>
-    </div>
+    </Link>
   )
 }

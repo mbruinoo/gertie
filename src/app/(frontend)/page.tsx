@@ -53,8 +53,9 @@ export default async function HomePage() {
       ? new Date(event.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
       : ''
     const venue = event.venue?.value?.name ?? event.venue?.name ?? ''
+    const prefix = event.tickerPrefix ? `${event.tickerPrefix}: ` : ''
     return {
-      label: [event.title, venue, date].filter(Boolean).join(' · '),
+      label: prefix + [event.title, venue, date].filter(Boolean).join(' · '),
     }
   })
 

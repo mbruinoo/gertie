@@ -86,11 +86,8 @@ export default function MemberEventsList({ events }: { events: EventItem[] }) {
           const meta = [event.venueName, dateStr].filter(Boolean).join(' · ')
 
           return (
-            <a
+            <div
               key={event.id}
-              href="https://join.gertie.co/"
-              target="_blank"
-              rel="noopener noreferrer"
               className={`member-event-card${isNew ? ' member-event-card--new' : ''}`}
             >
               <div
@@ -124,7 +121,7 @@ export default function MemberEventsList({ events }: { events: EventItem[] }) {
                 <p className="member-event-title">{displayTitle(event.title)}</p>
                 {meta && <h6 className="member-event-meta">{meta}</h6>}
               </div>
-            </a>
+            </div>
           )
         })}
       </div>

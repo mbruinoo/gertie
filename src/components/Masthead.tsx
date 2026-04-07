@@ -1,11 +1,9 @@
-import { RichText } from '@payloadcms/richtext-lexical/react'
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import MastheadScroll from './MastheadScroll'
+import Link from 'next/link'
 
 type MastheadPhoto = {
   url: string
   alt: string
-  caption?: SerializedEditorState | null
 }
 
 type MastheadProps = {
@@ -14,9 +12,9 @@ type MastheadProps = {
 }
 
 const photoConfigs = [
-  { className: 'floating-photo-a', showCaption: true  },
-  { className: 'floating-photo-b', showCaption: true  },
-  { className: 'floating-photo-c', showCaption: false },
+  { className: 'floating-photo-a', caption: 'Learn more about exhibitions', href: '/exhibitions', captionAbove: true },
+  { className: 'floating-photo-b', caption: 'Learn more about the Gertie Hub', href: '/hub', captionAbove: false },
+  { className: 'floating-photo-c', caption: 'Learn more about membership', href: '/membership', captionAbove: false },
 ]
 
 export default function Masthead({ tagline, photos }: MastheadProps) {
@@ -35,11 +33,17 @@ export default function Masthead({ tagline, photos }: MastheadProps) {
         const config = photoConfigs[i]
         if (!config) return null
         return (
-          <div
+          <Link
             key={i}
+            href={config.href}
             className={config.className}
-            style={{ position: 'absolute', willChange: 'transform' }}
+            style={{ position: 'absolute', willChange: 'transform', display: 'block', textDecoration: 'none', color: 'inherit' }}
           >
+            {config.captionAbove && (
+              <div className="masthead-caption">
+                {config.caption} &#8594;
+              </div>
+            )}
             <div className="masthead-floating-photo-crop">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -49,12 +53,12 @@ export default function Masthead({ tagline, photos }: MastheadProps) {
                 loading="lazy"
               />
             </div>
-            {config.showCaption && photo.caption && (
+            {!config.captionAbove && (
               <div className="masthead-caption">
-                <RichText data={photo.caption} />
+                {config.caption} &#8594;
               </div>
             )}
-          </div>
+          </Link>
         )
       })}
 
