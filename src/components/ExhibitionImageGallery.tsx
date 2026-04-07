@@ -43,7 +43,7 @@ export function ExhibitionInstallationGrid({
 
   return (
     <div className="exhibition-body-section">
-      <p className="exhibition-body-label">Installation views</p>
+      <h3 className="exhibition-body-label">Installation views</h3>
       <div className="installation-grid">
         {images.map((img, i) => (
           <div

@@ -182,7 +182,15 @@ h5 {
 
 .page-section-label {
   grid-area: label;
-  padding-top: 15px;
+  padding-top: 8px;
+}
+
+.page-section-label h6 {
+  margin: 0;
+  font-family: 'Abcrom', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
 }
 
 .page-section-label p {
@@ -242,7 +250,7 @@ h5 {
   display: flex;
   align-items: baseline;
   gap: 12px;
-  padding: 14px 0;
+  padding: 14px 16px 14px 0;
   cursor: pointer;
   list-style: none;
   user-select: none;
@@ -250,6 +258,10 @@ h5 {
 
 .team-accordion-summary::-webkit-details-marker {
   display: none;
+}
+
+.team-accordion-summary:hover {
+  background-color: #eee;
 }
 
 .team-accordion-name {
@@ -377,12 +389,7 @@ details[open] .team-accordion-chevron {
   margin: 0;
 }
 
-.masthead-caption a {
-  color: #1b1b1b;
-  text-decoration: none;
-}
-
-.masthead-caption a:hover {
+a:hover .masthead-caption {
   text-decoration: underline;
 }
 
@@ -790,6 +797,15 @@ details[open] .team-accordion-chevron {
 
 .exhibition-body-section:last-child {
   margin-bottom: 0;
+}
+
+.exhibition-body-section--artists {
+  columns: 2;
+  column-gap: 24px;
+}
+
+.exhibition-body-section--artists .exhibition-body-label {
+  column-span: all;
 }
 
 .exhibition-body-label {
@@ -1253,6 +1269,60 @@ h3.exhibition-body-label {
 
 .curated-experiences-grid {
   max-width: 720px;
+}
+
+/* ── Press grid ── */
+.press-grid {
+  grid-area: body;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 24px;
+}
+
+.press-tile {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.press-tile-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.press-tile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s;
+}
+
+.press-tile:hover .press-tile-image img {
+  opacity: 0.85;
+}
+
+.press-tile-title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.press-tile-publication {
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+  margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .press-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media screen and (max-width: 767px) {

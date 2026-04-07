@@ -102,7 +102,7 @@ export default async function ExhibitionDetailPage({
 
         {/* Artists */}
         {artists.length > 0 && (
-          <div className="exhibition-body-section">
+          <div className="exhibition-body-section exhibition-body-section--artists">
             <h3 className="exhibition-body-label">Artists</h3>
             {artists.map((a, i) => (
               <p key={i} className="exhibition-body-text">{a.name}</p>

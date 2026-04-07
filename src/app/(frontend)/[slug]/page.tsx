@@ -13,6 +13,7 @@ import MemberEventsBlock from '@/components/MemberEventsBlock'
 import CuratedExperiencesBlock from '@/components/CuratedExperiencesBlock'
 import HubHeroBlock from '@/components/HubHeroBlock'
 import HubInfoBlock from '@/components/HubInfoBlock'
+import PressBlock from '@/components/PressBlock'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -118,6 +119,8 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
           return null
         })}
+
+        {slug === 'about' && <PressBlock />}
       </main>
 
       <SiteFooter

@@ -66,7 +66,7 @@ export default async function CuratedExperiencesBlock({
       <div className="page-section-body">
         <div className="curated-experiences-grid">
           {experiences.map((exp) => (
-            <a key={exp.id} className="curated-experience-item" href="https://join.gertie.co/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link key={exp.id} className="curated-experience-item" href="/membership" style={{ textDecoration: 'none', color: 'inherit' }}>
               {exp.date && <p className="curated-experience-date">{exp.date}</p>}
               <h3 className="curated-experience-title">{exp.title}</h3>
               {exp.imageUrl && (
@@ -79,7 +79,7 @@ export default async function CuratedExperiencesBlock({
                   />
                 </div>
               )}
-            </a>
+            </Link>
           ))}
         </div>
       </div>

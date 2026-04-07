@@ -45,7 +45,7 @@ export default async function MemberEventsBlock({
   return (
     <section className="page-section member-events-section">
       <div className="page-section-label">
-        <p><strong>Member Events</strong></p>
+        <p><strong>Curious Experiences</strong></p>
         {subtitle && (
           <p style={{ fontWeight: 400, marginTop: '8px' }}>
             {subtitle}
