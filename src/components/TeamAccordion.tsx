@@ -5,6 +5,7 @@ import AccordionController from './AccordionController'
 type Item = {
   name?: SerializedEditorState | null
   description?: SerializedEditorState | null
+  imageUrl?: string | null
 }
 
 export default function TeamAccordion({ members }: { members: Item[] }) {
@@ -18,10 +19,17 @@ export default function TeamAccordion({ members }: { members: Item[] }) {
             </span>
             <span className="team-accordion-chevron" aria-hidden="true" />
           </summary>
-          {item.description && (
+          {(item.description || item.imageUrl) && (
             <div className="team-accordion-bio">
               <div className="team-accordion-bio-inner">
-                <RichText data={item.description} />
+                {item.description && <RichText data={item.description} />}
+                {item.imageUrl && (
+                  <img
+                    src={item.imageUrl}
+                    alt=""
+                    style={{ width: 'auto', height: 'auto', maxHeight: '40svh', display: 'block', marginTop: '24px' }}
+                  />
+                )}
               </div>
             </div>
           )}

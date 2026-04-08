@@ -158,6 +158,14 @@ export const Pages: CollectionConfig = {
                   label: 'Description',
                   editor: fullEditor,
                 },
+                {
+                  name: 'imageUrl',
+                  type: 'text',
+                  label: 'Image URL (optional)',
+                  admin: {
+                    description: 'URL of an image to display below the bio text.',
+                  },
+                },
               ],
             },
           ],
