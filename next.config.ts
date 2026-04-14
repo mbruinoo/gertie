@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
       { protocol: 'https', hostname: 'gertie.co' },
       { protocol: 'https', hostname: 'www.gertie.co' },
+      { protocol: 'https', hostname: 'cdn.prod.website-files.com' },
     ],
   },
   webpack: (webpackConfig) => {
