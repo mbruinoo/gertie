@@ -20,6 +20,7 @@
     "@payloadcms/richtext-lexical": "^3.0.0",
     "@payloadcms/storage-vercel-blob": "^3.80.0",
     "@payloadcms/ui": "^3.0.0",
+    "@vercel/blob": "^2.3.3",
     "next": "15.4.11",
     "payload": "^3.0.0",
     "react": "^19.0.0",

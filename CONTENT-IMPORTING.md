@@ -24,3 +24,4 @@ which is the intended signal to add the redirect.
 | `Gertie-Over-My-Head-2025-Thumbnail.jpg` | `over-my-head-2025-installation.jpg` | 8 | Masthead photo A | 2026-04-04 |
 | `Gertie-Over-My-Head-2025-Thumbnail-2.jpg` | `elvis-lives-2025.jpg` | 9 | Masthead photo B | 2026-04-04 |
 | `Gertie-Exhibition-Thumbnail-3.jpg` | `gertie-dinner.jpg` | 10 | Masthead photo C | 2026-04-04 |
+| `_DSF4131.jpg` | `ornament-and-information-cover.jpg` | 125 | Cover image for Ornament & Information exhibition | 2026-04-20 |

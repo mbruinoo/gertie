@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs'
 import path from 'path'
+import { list } from '@vercel/blob'
 
 const MIME_TYPES: Record<string, string> = {
   jpg: 'image/jpeg',
@@ -22,6 +23,7 @@ export async function GET(
   const { filename } = await params
   const filePath = path.join(process.cwd(), 'media', filename)
 
+  // Try local file first
   try {
     const file = await fs.readFile(filePath)
     const ext = filename.split('.').pop()?.toLowerCase() ?? ''
@@ -39,6 +41,20 @@ export async function GET(
 
     return new Response(file, { headers })
   } catch {
-    return new Response('Not Found', { status: 404 })
+    // Fall through to Vercel Blob
   }
+
+  // Fall back to Vercel Blob
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      const { blobs } = await list({ prefix: filename, limit: 1 })
+      if (blobs.length > 0) {
+        return Response.redirect(blobs[0].url, 302)
+      }
+    } catch {
+      // Fall through to 404
+    }
+  }
+
+  return new Response('Not Found', { status: 404 })
 }
